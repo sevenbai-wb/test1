@@ -23,7 +23,7 @@
             };
 
             function handleSuccess(stream) {
-                window.stream = stream; // make stream available to browser console
+                // window.stream = stream; // make stream available to browser console
                 video.srcObject = stream;
                 document.body.appendChild(video);
             }
