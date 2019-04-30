@@ -96,7 +96,7 @@
         //     return false;
         // };
 
-        function captureAndInjectCameraFeed(callback) {
+        function captureAndInjectCameraFeed() {
             var video = document.createElement('video');
             video.width = 224;
             video.height = 224;
@@ -115,12 +115,10 @@
                 window.stream = stream; // make stream available to browser console
                 video.srcObject = stream;
                 document.body.appendChild(video);
-                callback(false);
             }
 
             function handleError(error) {
                 console.log('navigator.getUserMedia error: ', error);
-                callback(true, error);
             }
 
             navigator.mediaDevices.getUserMedia(constraints).
@@ -186,17 +184,17 @@
         //     console.log(message);
         // };
 
-        function onTestsPassed(e) {
-            captureAndInjectCameraFeed(function (error, message) {
-                if (!error) {
-                    outputTest('Camera: Success, was found and injected into the webpage', codes.ok);
-                } else {
-                    outputTest('Camera: Failed, an error occured and did not inject camera feed into the webpage.', codes.error);
-                    appendElement('p', 'Error: ' + JSON.stringify(message), codes.error);
-                    appendElement('p', 'This error may appear if you have not clicked a permissions pop up (browser dependant), manually blocked the camera, or if the experience is being served from an unsecured host. If the HTTPS test failed please click "Force redirect to HTTPS" and try again.', codes.error);
-                }
-            });
-        };
+        // function onTestsPassed(e) {
+        //     captureAndInjectCameraFeed(function (error, message) {
+        //         if (!error) {
+        //             outputTest('Camera: Success, was found and injected into the webpage', codes.ok);
+        //         } else {
+        //             outputTest('Camera: Failed, an error occured and did not inject camera feed into the webpage.', codes.error);
+        //             appendElement('p', 'Error: ' + JSON.stringify(message), codes.error);
+        //             appendElement('p', 'This error may appear if you have not clicked a permissions pop up (browser dependant), manually blocked the camera, or if the experience is being served from an unsecured host. If the HTTPS test failed please click "Force redirect to HTTPS" and try again.', codes.error);
+        //         }
+        //     });
+        // };
 
         // function goToHTTPS() {
         //     location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
@@ -204,10 +202,11 @@
 
         window.onload = function (e) {
             // if (runTests() < codes.error) {
-                onTestsPassed();
+                // onTestsPassed();
             // } else {
             //     appendElement('p', 'Due to found errors camera streaming will not be injected.', codes.error);
             // }
+            captureAndInjectCameraFeed();
         };
     </script>
 </body>
