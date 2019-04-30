@@ -25,9 +25,9 @@
         <!-- <p>
             <a href="javascript:void(0)" onclick="goToHTTPS()">Force redirect to HTTPS</a>
         </p> -->
-        <!-- <p>
+        <p>
             <a href="javascript:void(0)" onclick="onTestsPassed()">Force camera access and inject to webpage</a>
-        </p> -->
+        </p>
         <!-- <p>
             <strong>Tests:</strong>
         </p>
@@ -98,30 +98,30 @@
 
         function captureAndInjectCameraFeed(callback) {
             var video = document.createElement('video');
-            video.width = 320;
-            video.height = 240;
+            video.width = 640;
+            video.height = 480;
             video.setAttribute('autoplay', '');
 
             var constraints = {
                 video: {
-                        width: 320,
-                        height: 240,
+                        width: 224,
+                        height: 224,
                         facingMode: "environment"
                         },
                 audio: false
             };
 
-            // function handleSuccess(stream) {
-            //     window.stream = stream; // make stream available to browser console
-            //     video.srcObject = stream;
-            //     document.body.appendChild(video);
-            //     callback(false);
-            // }
+            function handleSuccess(stream) {
+                window.stream = stream; // make stream available to browser console
+                video.srcObject = stream;
+                document.body.appendChild(video);
+                callback(false);
+            }
 
-            // function handleError(error) {
-            //     console.log('navigator.getUserMedia error: ', error);
-            //     callback(true, error);
-            // }
+            function handleError(error) {
+                console.log('navigator.getUserMedia error: ', error);
+                callback(true, error);
+            }
 
             navigator.mediaDevices.getUserMedia(constraints).
                 then(handleSuccess).catch(handleError);
